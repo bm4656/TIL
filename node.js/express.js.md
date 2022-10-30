@@ -93,6 +93,7 @@ my-web
     ├── index.jade
     └── layout.jade
 ```
+
 ## Express.js 의 동작 방식
 
 express-generator로 만들어진 프로젝트 디렉터리에 접근하여
@@ -238,5 +239,5 @@ HTTP 응답을 처리하는 객체로 HTTP 응답의 데이터를 전송하거�
 - **res.render()** -> HTML Template 을 사용하여 화면을 전송함
 - **res.set()** -> HTTP 응답의 헤더를 설정함
 - **res.status()** -> HTTP 응답의 상태 값을 설정함
-
-💡 Express.js는 app 객체를 시작으로 모든 동작이 이루어지는데 app 객체나 Express.Router를 사용하여 라우팅을 구현하고, Request Handler를 통해 HTTP 요청,응답을 처리한다.
+- 보내는 데이터 형식이 json인 경우 `res.send`보다 `res.json`을 사용하는 것이 좋다. 함수가 실행되는 로직이 아래와 같은데, `res.json`의 실행 횟수가 더 적기 때문에 효율적이다. - `res.send`: res.send → res.json → res.send - `res.json`: res.json → res.send
+  💡 Express.js는 app 객체를 시작으로 모든 동작이 이루어지는데 app 객체나 Express.Router를 사용하여 라우팅을 구현하고, Request Handler를 통해 HTTP 요청,응답을 처리한다.
