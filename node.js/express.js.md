@@ -1,4 +1,4 @@
-### Express.js 시작하기
+## Express.js 시작하기
 
 Express.js 는 Node.js 의 가장 유명한 웹 프레임워크이다.
 
@@ -6,7 +6,7 @@ Express.js 는 Node.js 의 가장 유명한 웹 프레임워크이다.
 - 다양한 미들웨어를 통해 필요한 기능을 간단하게 추가할 수 있다.
 - 모든 동작이 명시적으로 구성되기 때문에 웹 프레임워크의 동작 방식을 이해하기 가장 좋은 프레임워크이다.
 
-#### npm init
+### 1. npm init
 
 Express.js를 처음부터 작성할 수 있는 방법이다. (직접 모든 구조를 작성)
 
@@ -46,7 +46,7 @@ $npm start // 서버 시작 localhost:3000
 ctrl+c // 서버 종료
 ```
 
-#### express-generator
+### 2. express-generator
 
 Express.js는 express-generator 라고 하는 **프로젝트 생성기**를 제공한다.
 
@@ -61,7 +61,7 @@ $npm i //필요한 패키지 모두 설치
 $npm start //서버 실행
 ```
 
-#### npx + express-generator
+### 3. npx + express-generator
 
 npx를 사용하여 express-generator 를 설치하지 않고, 바로 사용 가능하다. express-generator는 프로젝트 생성 이후엔 사용되지 않기 때문에, npx를 사용하는 것도 좋은 방법이다.
 
@@ -72,9 +72,8 @@ $npm i
 $npm start
 ```
 
-### Express.js 의 구조
+## Express.js 의 구조
 
-<br>
 ```jsx
 my-web
 ├── app.js //Express.js 의 가장 기본이 되는 파일, 웹 어플리케이션의 기능을 정의
@@ -94,7 +93,7 @@ my-web
     ├── index.jade
     └── layout.jade
 ```
-### Express.js 의 동작 방식
+## Express.js 의 동작 방식
 
 express-generator로 만들어진 프로젝트 디렉터리에 접근하여
 **npm start** 로 Express.js 프로젝트를 실행하면 **localhost:3000 에 접속**하여 Welcome to Express 페이지를 확인할 수 있다.
@@ -106,7 +105,7 @@ express-generator로 만들어진 프로젝트 디렉터리에 접근하여
 5. views/index.jade
    → 웹 페이지 “Welcome to Express” 화면
 
-#### app.js
+### 1. app.js
 
 ```jsx
 var express = require('express');
@@ -119,7 +118,7 @@ app.js에서는 express() 로 생성되는 app 객체를 확인할 수 있다.
 - **app 객체 → Express.js 기능을 담은 객체**
 - **Express.js의 모든 동작은 app 객체에 정의된다!**
 
-##### app 객체 주요 기능
+### 2. app 객체 주요 기능
 
 - **app.use()**
   middleware 를 사용하기 위한 함수
@@ -129,12 +128,12 @@ app.js에서는 express() 로 생성되는 app 객체를 확인할 수 있다.
 - **app.locals**
   app에서 사용할 공통 상수, Express.js 에선 global 변수를 선언하지 않고 이 값을 사용할 수 있다.
 
-#### 라우팅
+## 라우팅
 
-라우팅이란 HTTP 요청 URL에 해당하는 알맞은 응답의 경로를 미리 설정하는 것을 말한다.
+라우팅이란 HTTP 요청 URL에 해당하는 알맞은 응답의 경로를 미리 설정하는 것을 말한다.<br>
 Express.js 는 다양한 라우팅 방식을 제공하는데, 크게 app 라우팅과 Express.Roueter 를 통한 라우팅으로 나누어진다.
 
-**app 라우팅**
+### 1. app 라우팅
 
 ```jsx
 app.get("/", (req, res) => {
@@ -162,7 +161,7 @@ app.all("/all", (req, res) => {
 
 - all 함수를 사용하면 HTTP method에 상관없이 라우팅이 가능하다.
 
-**Express.Router**
+### 2. Express.Router
 
 app 라우팅을 통해서는 라우팅의 핵심인 그룹화를 지원하지 않는다. Express.Router 를 통해 라우팅을 모듈화 할 수 있다.
 
@@ -197,15 +196,15 @@ router.use('/pets', petRouter);
 module.exports = router;
 ```
 
-### 라우팅 - path parameter
+## 라우팅 - path parameter
 
 Express.js 라우팅은 **path parameter**를 제공한다. path parameter를 사용하면, **주소의 일부를 변수처럼 사용**할 수 있다.
 
 Ex)
-/users/**:id** /users/123, /users/456 등으로 접속했을 때 라우팅 적용
+/users/**:id** /users/123, /users/456 등으로 접속했을 때 라우팅 적용<br>
 /boards/**:from\*\***:to\*\* /board/123-456 등으로 접속했을 때 라우팅 적용
 
-#### Request Handler
+### 1. Request Handler
 
 라우팅에 적용되는 함수를 **Request Handler**라고 부른다.
 HTTP요청과 응답을 다룰 수 있는 함수로 설정된 **라우팅 경로에 해당하는 요청**이 들어오면 Request Handler **함수가 실행**된다.
@@ -221,32 +220,23 @@ router.get("/:id", (req, res) => {
 - 설정된 라우팅 경로에 해당하는 요청이 들어오면 Request Handler 함수가 실행된다.
 - 요청을 확인하고 응답을 보내는 역할을 한다.
 
-#### Request Handler - Request 객체
+### 2. Request Handler - Request 객체
 
 HTTP 요청 정보를 가진 객체로 HTTP 요청의 path parameter, query parameter, body, header 등을 확인 할 수 있다.
 
-- **req.params**
-  URL 표현 중 /path/:id 에서:id 를 req.params.id 로 사용할 수 있다.
-- **req.queries**
-  URL 표현 중 /path?page=2 에서page 부분을 req.queries.page 로 사용할 수 있다.
-- **req.body**
-  일반적으로 POST 요청의 요청 데이터를 담고 있다. req.body 에 요청 데이터가 저장되어 들어온다.
-- **req.get('')**
-  HTTP Request 의 헤더 값을 가져올 수 있는데, req.get('Authorization') 등으로 값을 가져온다.
+- **req.params** -> URL 표현 중 /path/:id 에서:id 를 req.params.id 로 사용할 수 있다.
+- **req.queries** -> URL 표현 중 /path?page=2 에서page 부분을 req.queries.page 로 사용할 수 있다.
+- **req.body** -> 일반적으로 POST 요청의 요청 데이터를 담고 있다. req.body 에 요청 데이터가 저장되어 들어온다.
+- **req.get('')** -> HTTP Request 의 헤더 값을 가져올 수 있는데, req.get('Authorization') 등으로 값을 가져온다.
 
-#### Request Handler – Response 객체
+### 3. Request Handler – Response 객체
 
 HTTP 응답을 처리하는 객체로 HTTP 응답의 데이터를 전송하거나, 응답 상태 및 헤더를 설정할 수 있다.
 
-- **res.send()**
-  text 형식의 HTTP 응답을 전송함
-- **res.json()**
-  json 형식의 HTTP 응답을 전송함
-- **res.render()**
-  HTML Template 을 사용하여 화면을 전송함
-- **res.set()**
-  HTTP 응답의 헤더를 설정함
-- **res.status()**
-  HTTP 응답의 상태 값을 설정함
+- **res.send()** -> text 형식의 HTTP 응답을 전송함
+- **res.json()** -> json 형식의 HTTP 응답을 전송함
+- **res.render()** -> HTML Template 을 사용하여 화면을 전송함
+- **res.set()** -> HTTP 응답의 헤더를 설정함
+- **res.status()** -> HTTP 응답의 상태 값을 설정함
 
 💡 Express.js는 app 객체를 시작으로 모든 동작이 이루어지는데 app 객체나 Express.Router를 사용하여 라우팅을 구현하고, Request Handler를 통해 HTTP 요청,응답을 처리한다.
