@@ -9,7 +9,23 @@ Node.js에서 가장 기본적이고 중요한 웹 모듈로, 서버나 클라�
 1. 웹 서버 객체(=http.Server 객체)는 `createServer()` 함수로 생성한다.
    -> 콜백 함수 안에 `req, res` 등록
    즉, 요청의 정보를 담고있는 `request`와 응답의 정보를 담고있는 `response`라는 두 개의 매개변수가 있는 함수를 인자로 받습니다.
-2. `response`의 `writeHead()`를 이용해 요청에 응답 헤더 정보를 보낼 수 있다.
+
+```jsx
+//1번째
+const http = require("http");
+
+const server = http.createServer((request, response) => {
+  // 여기서 작업이 진행된다.
+});
+//2번쨰
+const server = http.createServer();
+
+server.on("request", (request, response) => {
+  // 여기서 작업이 진행된다.
+});
+```
+
+2. `response`의 `writeHead(상태코드, 헤더 정보)`를 이용해 요청에 응답 헤더 정보를 보낼 수 있다.
    응답 헤더에는 Content-Type과 같은 정보를 포함한다.
 
 3. `response`의 `end()` 함수는 헤더와 본문 데이터를 서버에 전달했음을 알린다. 인자로는 서버에 보낼 본문을 전달한다.
