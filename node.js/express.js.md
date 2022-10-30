@@ -241,3 +241,57 @@ HTTP 응답을 처리하는 객체로 HTTP 응답의 데이터를 전송하거�
 - **res.status()** -> HTTP 응답의 상태 값을 설정함
 - 보내는 데이터 형식이 json인 경우 `res.send`보다 `res.json`을 사용하는 것이 좋다. 함수가 실행되는 로직이 아래와 같은데, `res.json`의 실행 횟수가 더 적기 때문에 효율적이다. - `res.send`: res.send → res.json → res.send - `res.json`: res.json → res.send
   💡 Express.js는 app 객체를 시작으로 모든 동작이 이루어지는데 app 객체나 Express.Router를 사용하여 라우팅을 구현하고, Request Handler를 통해 HTTP 요청,응답을 처리한다.
+
+## 계층적 구조의 라우터
+
+계층적 구조의 라우터를 사용할 때, 라우터의 선언 시
+
+`Router({ mergeParams: true })`
+
+를 사용해야, 이전 라우터에서 전달된 path parameter 를 사용할 수 있다.
+
+```jsx
+// index.js
+const express = require("express");
+
+const userRouter = require("./routes/users");
+
+const app = express();
+// "/" 경로에 아무런 설정을 하지 않으면, 첫 실행 시 Cannot GET /가 나타난다.
+app.get("/", (req, res) => {
+  res.send("OK");
+});
+
+/* 라우터를 '/users' 경로에 연결 */
+app.use("/users", userRouter);
+
+app.listen(8080);
+
+// routes/users.js
+//Router를 이용해 GET 요청 처리하는 API를 라우팅
+const { Router } = require("express");
+
+const router = Router();
+
+router.get("/", (req, res) => {
+  res.send("GET /users");
+});
+
+/* /:userId/pets 경로에 petsRouter 연결 */
+const petsRouter = require("./pets");
+router.use("/:userId/pets", petsRouter);
+
+module.exports = router;
+
+// routes/pets.js
+const { Router } = require("express");
+
+const router = Router({ mergeParams: true });
+
+/* GET 라우팅 추가 */
+router.get("/", (req, res) => {
+  const { userId } = req.params;
+  res.send(`Pets of user ${userId}`);
+});
+module.exports = router;
+```
