@@ -113,8 +113,8 @@ original.insertAdjacentHTML("afterend", d);
 ```
 
 3. 주입 후
-   https://cdn-api.elice.io/api-attachment/attachment/a4bad34c0f554617855fd6ab36394bbc/image.png
-   즉, 요소 안에 주입할 때는 **b or c** 를 사용한다.
-   보통 요소의 마지막에 주입하기 때문에 **c**를 사용한다.
+
+즉, 요소 안에 주입할 때는 **b or c** 를 사용한다.
+보통 요소의 마지막에 주입하기 때문에 **c**를 사용한다.
 
 -> 따라서 `beforeend`를 많이 사용하게 된다.

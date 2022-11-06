@@ -51,4 +51,4 @@ git reset 에는 3가지 옵션을 줄 수 있는데
 
    - 커밋을 지정한 시점으로 완전히 돌려버릴떄 사용한다. 해당 커밋한 시점으로 돌아갔다고 보면 된다.
 
-   (참고: https://antilog.tistory.com/29)
+ (참고: https://antilog.tistory.com/29)
