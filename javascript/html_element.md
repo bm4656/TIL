@@ -89,6 +89,8 @@ function addElement() {
 
 1. 주입 전
 
+![image1](https://user-images.githubusercontent.com/65716445/200174602-2296f30b-c924-4606-85e7-d2ff21111e45.png)
+
 ```html
 <body>
   <div id="original" style="border: 1px solid">오리지널</div>
@@ -113,6 +115,8 @@ original.insertAdjacentHTML("afterend", d);
 ```
 
 3. 주입 후
+
+![image2](https://user-images.githubusercontent.com/65716445/200174619-fa416deb-8274-403a-bc17-20b4748430fa.png)
 
 즉, 요소 안에 주입할 때는 **b or c** 를 사용한다.
 보통 요소의 마지막에 주입하기 때문에 **c**를 사용한다.
