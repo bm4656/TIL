@@ -122,3 +122,6 @@ original.insertAdjacentHTML("afterend", d);
 보통 요소의 마지막에 주입하기 때문에 **c**를 사용한다.
 
 -> 따라서 `beforeend`를 많이 사용하게 된다.
+
+
+추가 하기 -> (https://velog.io/@1106laura/insertAdjacentHTML)
