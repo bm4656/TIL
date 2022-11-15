@@ -72,3 +72,97 @@ const [data, setData] = useState([]);
 
 컴포넌트 내에서 'State'를 이용하여 데이터를 유동적으로 관리한다.
 'State'가 변경될 때마다 컴포넌트가 다시 렌더링 된다.
+
+# React 시작하기
+
+```bash
+npx create-react-app <디렉토리명>
+cd <디렉토리명>
+npm start
+```
+
+- npx : npm 패키지를 1회성으로 내려 받아 실행할 때 사용하는 명령어
+- 실행하면 public 디렉토리 속 index.html 파일 뜨고 그 다음 src 안에 파일이 뜬다.
+
+```bash
+npm install
+//package.json에 정의된 dependency(의존 성 패키지)들을 설치
+npm install <패키지명>
+//npm 서버로부터 원하는 패키지를 내려 받기
+npm start
+//프로젝트를 실행(Node.js 서버 이용)
+npm build
+//프로젝트를 빌드
+(Ctrl + C)
+//명령을 중지(npm start 후 종료)
+```
+
+## 디렉토리 구조
+
+- ./node_modules/ : npm을 이용해 설치한 패키지들 모음
+- ./public/ :정적인파일들을모아놓는곳
+- ./src/ : 리액트 개발을 위한 파일들을 모아놓는 곳
+- ./.gitignore : Git을 이용할 경우에 불필요한 파일을 무시할 수 있도록 하는 설정파일
+- ./package.json : 프로젝트에 관한 정보와 사용하는 패키지들을 명세하는 파일
+- ./README.md : 프로젝트에 관한 설명을 작성하는 파일
+
+## 라이브러리
+
+```bash
+npm install
+//package.json 파일 내에 정의된 패키지 모두 설치
+npm install <패키지명>
+//npm 서버로부터 패키지 내려받기
+npm install <패키지명>@<version>
+//특정 버전의 패키지 내려받기
+npm install <git 레포지토리 주소>
+//npm이 아닌 git 레포지토리로부터 패키지 내려받기
+```
+
+### package.json
+
+dependencies(의존성) 라는 키 아래에 설치된 패키지 목록이 나열된다.
+
+```json
+{ ...
+	"dependencies": {
+    "@testing-library/jest-dom": "^5.16.4",
+    "@testing-library/react": "^13.3.0",
+    "@testing-library/user-event": "^13.5.0",
+    "prop-types": "^15.8.1",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "styled-components": "^5.3.5",
+    "typescript": "^4.7.4",
+	},
+	...
+}
+```
+
+- ^(캐럿) : 버전명에 ^과 <,≤,>,≥ 등으로 범위를 나타낼 수 있다.
+  - ^ 이것과 관련된 버전 중 가장 최신 버전을 설치해줘!
+  - 예) ^1.0.2 : >=1.0.2 <2.0 이나 ^1.0 : >=1.0.0 <2.0
+
+### import
+
+설치한 라이브러리를 프로젝트 내에서 import로 불러온다.
+
+```jsx
+import "패키지명";
+import something from "패키지명";
+import { a, b } from "패키지명";
+import * as something from "패키지명";
+```
+
+1. CSS나 import하는 것 만으로 역할을 하는 라이브러리인 경우 패키지명을 바로 import 한다.
+2. 기본적으로 패키지를 불러와 활용할 때에 는 할당할 이름을 작성한다.
+3. 패키지 내의 일부 메소드나 변수만 가져올 때는 구조분해를 하여 가져오는 것이 효율적이다.
+4. 패키지에 default로 export되는 객체가 존재하지 않을 경우 \* as 이름 으로 불러올 수 있다.
+
+**CSS**
+
+```jsx
+import "./App.css";
+//별도의 CSS 파일 작성 후 프로젝트에 적용
+//.css 파일명 붙여주어야 함
+```
