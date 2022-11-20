@@ -1,0 +1,102 @@
+# Hook
+
+컴포넌트에서 **데이터를 관리(State)하고 데이터가 변경될 때 상호작용(Effect)** 을 하기 위해 사용한다.
+
+### Hook의 등장 배경
+
+- 기존에는 컴포넌트 내에서 State와 생명주기를 관리하기 위해서 반드시 클래스 컴포넌트(Class Component)를 사용하여야 했다.
+- 그러나 개발자가 느끼기에 다소 복잡한 클래스 컴포넌트(Class Component)를 보완하고 함수 컴포넌트에서 클래스 컴포넌트의 기능을 구현하기 위해 **React 16.8 버전**에 추가된 것이 바로 **Hook**이다.
+
+### 유의사항
+
+- **Hook은 React 함수(컴포넌트, Hook) 내에서만 사용한다.**
+- Hook의 이름은 반드시 `use` 로 시작해야한다.
+- 최상위 Level에서만 Hook을 호출할 수 있다.
+  → if문, for문 내부 또는 콜백함수 내에서 호출하지 말기
+
+## State Hook
+
+```jsx
+const App = () => {
+  // 일반적인 useState 사용법
+  const [state이름, setState이름] = useState(초기값);
+};
+```
+
+- useState : 컴포넌트 내 동적인 데이터를 관리할 수 있는 hook
+- 최초에 useState가 호출될 때 초기값으로 설정, 이후 재 렌더링이 될 경우 무시된다.
+- state는 읽기 전용이므로 직접 수정하지 않는다.
+  - state를 변경하기 위해서는 setState를 이용한다.
+- state가 변경되면 자동으로 컴포넌트가 재 렌더링된다.
+  - setState 함수 호출하면 state 값이 변경되었음을 리액트 코어에 알려주는 로직이 마지막에 있고 그 로직이 호출되었을 때 컴포넌트가 다시 그려짐
+
+```jsx
+const App = () => {
+  const [title, setTitle] = useState("");
+  // State를 변경할 값을 직접 입력
+  setTitle("Hello");
+
+  // 또는 현재 값을 매개변수로 받는 함수 선언
+  // return 값이 state에 반영됨
+  setTitle((current) => {
+    return current + "World";
+  });
+};
+```
+
+- state를 변경하기 위해서는 setState 함수에 직접 값을 입력하거나
+- 현재 값을 매개변수로 받는 함수를 전달한다. 이 때 함수에서 return되는 값이 state에 반영된다.
+
+## Effect Hook
+
+```jsx
+const App = () => {
+useEffect(EffectCallback, Deps?)
+}
+```
+
+- Effect Hook을 사용하면 **함수 컴포넌트에서 side effect를 수행**할 수 있습니다.
+  → 즉, 어떠한 값이 변할 때마다 내가 설정한 함수가 실행된다.
+- 컴포넌트가 최초로 렌더링될 때, 지정한 State나 Prop가 변경될 때마다 **이펙트 콜백 함수가 호출**된다.
+- **Deps**: 변경을 감지할 변수들의 집합(배열)
+- **EffectCallback**: Deps에 지정된 변수가 변경될 때 실행할 함수
+
+```jsx
+const App = () => {
+  const [count, setCount] = useState(0);
+
+  useEffect(() => {
+    console.log("버튼을 ${count}회 클릭했습니다.");
+  }, [count]);
+
+  return (
+    <div>
+      <button onClick={() => setCount(count + 1)}>클릭하세요</button>
+    </div>
+  );
+};
+```
+
+- Effect Hook을 사용하면 함수 컴포넌트에서 side effect를 수행할 수 있다.
+- 컴포넌트가 최초로 렌더링될 때, 지정한 State나 Prop가 변경될 때마다 이펙트 콜백 함수가 호출된다.
+
+### 넘겨준 deps 값이 [ ] 일 때
+
+```jsx
+const App = () => {
+  useEffect(() => {
+		// State가 변경될 때, 컴포넌트를 렌더링할 때
+		const intervalId = setInterval(()=>{
+			console.log("안녕하세요"); }, 1000);
+		// 컴포넌트를 재 렌더링 하기 전에, 컴포넌트가 // 없어질 때
+		return () => {
+			clearInterval(intervalId);
+	}
+}, [])
+...
+```
+
+- 넘겨준 값이 없더라도 컴포넌트가 생성이 될 때 최초로 한 번은 실행이 되기 때문에
+  → 컴포넌트가 생성이 될 때 한 번만 실행을 해줘!라는 의미
+- useEffect의 이펙트 함수 내에서 다른 함수를 return 할 경우
+  → state가 변경되어 컴포넌트가 다시 렌더링되기 전과 컴포넌트가 없어질 때(Destroy) 호출할 함수를 지정
