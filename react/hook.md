@@ -32,14 +32,14 @@ const App = () => {
 
 ```jsx
 const App = () => {
-  const [title, setTitle] = useState("");
+  const [title, setTitle] = useState('');
   // State를 변경할 값을 직접 입력
-  setTitle("Hello");
+  setTitle('Hello');
 
   // 또는 현재 값을 매개변수로 받는 함수 선언
   // return 값이 state에 반영됨
-  setTitle((current) => {
-    return current + "World";
+  setTitle(current => {
+    return current + 'World';
   });
 };
 ```
@@ -66,7 +66,7 @@ const App = () => {
   const [count, setCount] = useState(0);
 
   useEffect(() => {
-    console.log("버튼을 ${count}회 클릭했습니다.");
+    console.log('버튼을 ${count}회 클릭했습니다.');
   }, [count]);
 
   return (
@@ -100,3 +100,80 @@ const App = () => {
   → 컴포넌트가 생성이 될 때 한 번만 실행을 해줘!라는 의미
 - useEffect의 이펙트 함수 내에서 다른 함수를 return 할 경우
   → state가 변경되어 컴포넌트가 다시 렌더링되기 전과 컴포넌트가 없어질 때(Destroy) 호출할 함수를 지정
+
+## 이외의 Hooks
+
+### useMemo
+
+- 지정한 State나 Props가 변경될 경우 해당 값을 활용해 **계산된 값을 메모이제이션**하여 재렌더링 시 불필요한 연산을 줄인다.
+- useMemo의 연산은 **렌더링 단계**에서 이루어지기 때문에 렌더링 과정과 무관하게 시간이 오래 걸리는 로직을 작성하지 않는 것을 권장한다.
+
+```jsx
+const App = () => {
+	const [firstName, setFirstName] = useState('민지')
+	const [lastName, setLastName] = useState('김')
+
+// 이름과 성이 바뀔 때마다 풀네임을 메모이제이션
+const fullName = useMemo(() => {
+	return ′${firstName} ${lastName}′
+	}, [firstName, lastName])
+}
+```
+
+### useCallback
+
+- **함수**를 **메모이제이션**하기 위해 사용하는 Hook
+- 컴포넌트가 재렌더링될 때 불필요하게 함수가 다시 생성되는 것을 방지
+- useMemo(()⇒fn,deps) 와 useCallback(fn,deps)는 같다.
+
+```jsx
+const App = () => {
+	const [firstName, setFirstName] = useState('민지')
+	const [lastName, setLastName] = useState('김')
+// 이름과 성이 바뀔 때마다
+// 풀네임을 return하는 함수를 메모이제이션
+const getfullName = useCallback(() => {
+	return ′${firstName} ${lastName}′
+}, [firstName, lastName])
+  return <>{fullname}</>
+}
+```
+
+### useRef
+
+- **컴포넌트 생애 주기 내에서 유지**할 ref 객체를 반환한다.
+- ref 객체는 **.current**라는 프로퍼티를 가지며 이 값을 자유롭게 변경할 수 있다.
+- 일반적으로 React에서 **DOM Element에 접근**할 때 사용한다(DOM Element의 **ref 속성**을 이용)
+- useRef에 의해 반환된 ref 객체가 **변경되어도** 컴포넌트가 **재렌더링되지 않는다.**
+
+```jsx
+const App = () => {
+  const inputRef = useRef(null);
+  const onButtonClick = () => {
+    inputRef.current.focus();
+  };
+  return (
+    <div>
+      <input ref={inputRef} type='text' />
+      <button onClick={onButtonClick}>input으로 포커스 </button>
+    </div>
+  );
+};
+```
+
+## 커스텀 Hook
+
+- 자신만의 Hook을 만들면 컴포넌트 로직을 함수로 뽑아내어 재사용할 수 있다.
+- UI 요소의 재사용성을 올리기 위해 컴포넌트를 만드는 것 처럼, 로직의 재사용성을 높이기 위해서는 Custom Hook을 제작한다.
+
+```jsx
+function useMyHook(args) {
+  const [status, setStatus] = useState(null);
+  // ...
+  return status;
+}
+```
+
+- 한 로직이 여러 번 사용될 경우 함수를 분리하는 것 처럼 Hook을 만드는 것일 뿐, 새로운 개념은 아니다.
+- Hook의 이름은 ‘use’로 시작.
+- 한 Hook 내의 state는 공유되지 않는다.
