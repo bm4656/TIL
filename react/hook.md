@@ -164,13 +164,17 @@ const App = () => {
 
 ### 일반 변수 선언과 useRef()의 차이
 
-- useRef는 일반적인 자바스크립트 객체, 즉 heap 영역에 저장
+- useRef Hook 은 DOM 을 선택하는 용도 외에, 컴포넌트 안에서 조회 및 수정 할 수 있는 변수를 관리하는 것이 있다.
 
-- 그래서 어플리케이션이 종료되거나 가비지 컬렉팅 될 때 까지 참조할 때 마다 같은 메모리 주소를 가지게 되고같은 메모리 주소를 가지기 때문에 `===` 연산이 항상 true를 반환하고, 값이 바뀌어도 리렌더링 되지 않는다.
+- useRef 로 관리하는 변수는 값이 바뀐다고 해서 컴포넌트가 리렌더링되지 않는다. 리액트 컴포넌트에서의 상태는 상태를 바꾸는 함수를 호출하고 나서 그 다음 렌더링 이후로 업데이트 된 상태를 조회 할 수 있는 반면, useRef 로 관리하고 있는 변수는 설정 후 바로 조회 할 수 있다.
 
-- 하지만 함수 컴포넌트 내부에 변수를 선언한다면, 렌더링 될 때마다 값이 초기화 된다. 그래서 해당 방법을 지양한다.
+- 컴포넌트는 그 컴포넌트의 state나 props가 변경될 때마다 호출되는데(re-rendering), 함수형 컴포넌트는 일반 자바스크립트 함수와 마찬가지로 호출될 때마다 함수 내부에 정의된 로컬 변수들을 초기화합니다.
 
-- [https://react.vlpt.us/basic/12-variable-with-useRef.html](https://react.vlpt.us/basic/12-variable-with-useRef.html)
+- 따라서 `const nextId = { current: 4 };` 의 nextId.current는 함수가 호출될 때마다 4이다.
+
+- 반면 useRef로 만들어진 객체는 React가 만든 전역 저장소에 저장되기 때문에 함수를 재 호출하더라도 마지막으로 업데이트한 current 값이 유지된다.
+
+[참고자료](https://react.vlpt.us/basic/12-variable-with-useRef.html)
 
 ## 커스텀 Hook
 
