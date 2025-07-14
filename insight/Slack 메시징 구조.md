@@ -43,7 +43,7 @@ Gateway Server
 
 ### ✅ 메시지 전송
 
-![Slack_message_3.png](../.images/Slack_message_3.png)![Slack_메시징_구조_3.png](../.images/Slack_메시징_구조_3.png)
+![Slack_message_3.png](../.images/Slack_message_3.png)
 
 1. 슬랙 클라이언트가 메시지를 전송한다. → 웹앱 서버가 제공하는 API 이용
 2. 웹앱 서버는 메시지를 저장한다.
